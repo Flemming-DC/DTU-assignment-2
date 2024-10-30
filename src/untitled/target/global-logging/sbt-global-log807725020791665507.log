@@ -1,0 +1,88 @@
+[debug] > Exec(early(addDefaultCommands), None, None)
+[debug] > Exec(addDefaultCommands, None, None)
+[debug] > Exec(early(initialize), None, None)
+[debug] > Exec(initialize, None, None)
+[debug] > Exec(boot, None, None)
+[debug] > Exec(writeSbtVersion, None, None)
+[debug] > Exec(reload, None, None)
+[debug] > Exec(sbtStashOnFailure, None, None)
+[debug] > Exec(onFailure loadFailed, None, None)
+[debug] > Exec(loadp, None, None)
+[info] welcome to sbt 1.10.2 (Temurin Java 1.8.0_422)
+[debug] Load.defaultLoad until apply took 695.682ms
+[debug]           Load.loadUnit: plugins took 676.7538ms
+[debug]           Load.loadUnit: defsScala took 0.8218ms
+[debug] [Loading] Scanning directory C:\Mine\DTU\Assignment-2-original\codeA2\src\untitled\project
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in C:\Mine\DTU\Assignment-2-original\codeA2\src\untitled\project, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 321.2485 ms
+[debug]               Load.resolveProject(untitled-build) took 683.9154ms
+[debug]             Load.loadTransitive: finalizeProject(Project(id untitled-build, base: C:\Mine\DTU\Assignment-2-original\codeA2\src\untitled\project, plugins: List(<none>))) took 1854.0957ms
+[debug] [Loading] Done in C:\Mine\DTU\Assignment-2-original\codeA2\src\untitled\project, returning: (untitled-build)
+[debug]           Load.loadUnit: loadedProjectsRaw took 2473.36ms
+[debug]           Load.loadUnit: cleanEvalClasses took 0.9543ms
+[debug]         Load.loadUnit(file:/C:/Mine/DTU/Assignment-2-original/codeA2/src/untitled/project/, ...) took 3296.1652ms
+[debug]       Load.apply: load took 3782.0349ms
+[debug]       Load.apply: resolveProjects took 17.1448ms
+[debug]       Load.apply: finalTransforms took 252.6325ms
+[debug]       Load.apply: config.delegates took 41.766ms
+[debug]       Load.apply: Def.make(settings)... took 1680.4453ms
+[debug]       Load.apply: structureIndex took 497.9563ms
+[debug]       Load.apply: mkStreams took 4.6782ms
+[info] loading project definition from C:\Mine\DTU\Assignment-2-original\codeA2\src\untitled\project
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug]     Load.loadUnit: plugins took 10090.3577ms
+[debug]     Load.loadUnit: defsScala took 0.0083ms
+[debug] [Loading] Scanning directory C:\Mine\DTU\Assignment-2-original\codeA2\src\untitled
+[debug]       Load.loadUnit: mkEval took 30.0249ms
+[debug] [Loading] Found root project root w/ remaining 
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 5.9905 ms
+[info] loading settings for project root from build.sbt ...
+[debug]         Load.resolveProject(root) took 7.7258ms
+[debug]       Load.loadTransitive: finalizeProject(Project(id root, base: C:\Mine\DTU\Assignment-2-original\codeA2\src\untitled, plugins: List(<none>))) took 16.9266ms
+[debug] [Loading] Done in C:\Mine\DTU\Assignment-2-original\codeA2\src\untitled, returning: (root)
+[debug]     Load.loadUnit: loadedProjectsRaw took 746.6097ms
+[debug]     Load.loadUnit: cleanEvalClasses took 18.8035ms
+[debug]   Load.loadUnit(file:/C:/Mine/DTU/Assignment-2-original/codeA2/src/untitled/, ...) took 10859.6084ms
+[debug] Load.apply: load took 11008.98ms
+[debug] Load.apply: resolveProjects took 0.3458ms
+[debug] Load.apply: finalTransforms took 34.0755ms
+[debug] Load.apply: config.delegates took 0.8863ms
+[debug] Load.apply: Def.make(settings)... took 332.4971ms
+[debug] Load.apply: structureIndex took 90.8313ms
+[debug] Load.apply: mkStreams took 0.0047ms
+[info] set current project to untitled (in build file:/C:/Mine/DTU/Assignment-2-original/codeA2/src/untitled/)
+[debug] > Exec(sbtPopOnFailure, None, None)
+[debug] > Exec(resumeFromFailure, None, None)
+[debug] > Exec(notifyUsersAboutShell, None, None)
+[debug] > Exec(iflast shell, None, None)
+[debug] > Exec(shell, None, None)
+[info] sbt server started at local:sbt-server-4b200463449712c9e152
+[debug] Writing bsp connection file
+[info] started sbt server
