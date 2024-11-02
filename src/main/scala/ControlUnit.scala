@@ -3,9 +3,9 @@ import chisel3.util._
 
 class ControlUnit extends Module {
   val io = IO(new Bundle {
-    val instruction = Input(UInt(4.W))
+    val instruction = Input(UInt(4.W)) // opCode
 
-    val regDst = Output(Bool()) // load immediate
+    //val regDst = Output(Bool()) // load immediate
     val regWriteEnable = Output(Bool()) // regWrite
 
     val aluOp = Output(UInt(2.W))
@@ -14,7 +14,7 @@ class ControlUnit extends Module {
     val memToReg = Output(Bool()) // take data from memory, not alu
     val memWriteEnable = Output(Bool())
 
-    val branch = Output(Bool())
+    //val branch = Output(Bool())
   })
 
   //Implement this module here
@@ -60,7 +60,7 @@ class ControlUnit extends Module {
     is(ADDI) {io.regWriteEnable := true.B}
     is(MULT) {io.regWriteEnable := true.B}
   }
-
+  /*
   io.regDst := false.B // regDst = load immediate
   switch(io.instruction) {
     is(ADD)  {io.regDst := false.B}
@@ -69,7 +69,7 @@ class ControlUnit extends Module {
     is(JNEQ) {io.regDst := false.B}
     is(JLT)  {io.regDst := false.B}
   }
-
+  */
 
   io.memToReg := false.B // take data from memory rather than from calculation
   switch(io.instruction) {
@@ -83,11 +83,12 @@ class ControlUnit extends Module {
   switch(io.instruction) {
     is(SD) {io.memWriteEnable := true.B}
   }
-
+/*
   io.branch := false.B
   switch(io.instruction) {
     is(JR) {io.branch := true.B}
     is(JLT) {io.branch := true.B}
     is(JNEQ) {io.branch := true.B}
   }
+ */
 }

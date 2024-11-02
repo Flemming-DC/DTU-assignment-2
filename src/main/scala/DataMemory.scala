@@ -8,7 +8,7 @@ class DataMemory extends Module {
 
     val dataRead = Output(UInt (32.W))
 
-    //This signals are used by the tester for loading and dumping the memory content, do not touch
+    // These signals are used by the tester for loading and dumping the memory content, do not touch
     val testerEnable = Input(Bool ())
     val testerAddress = Input(UInt (16.W))
     val testerDataRead = Output(UInt (32.W))

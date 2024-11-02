@@ -4,9 +4,9 @@ import chisel3.util._
 // ProgramCounter er en instruction pointer
 class ProgramCounter extends Module {
   val io = IO(new Bundle {
+    val run = Input(Bool())
     val stop = Input(Bool())
     val jump = Input(Bool())
-    val run = Input(Bool())
     val programCounterJump = Input(UInt(16.W))
 
     val programCounter = Output(UInt(16.W))
@@ -14,7 +14,7 @@ class ProgramCounter extends Module {
 
   //Implement this module here (respect the provided interface, since it used by the tester)
 
-  val counterReg = RegInit(0.U(16.W));
+  private val counterReg = RegInit(0.U(16.W));
   when(io.run && !io.jump && !io.stop){
     counterReg := counterReg + 1.U;
   } .elsewhen(io.run && io.jump && !io.stop) {

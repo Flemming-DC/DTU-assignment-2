@@ -1,12 +1,47 @@
-[0m[[0m[31merror[0m] [0m[0mjava.lang.ClassNotFoundException: ProramCounterTester[0m
-[0m[[0m[31merror[0m] [0m[0m	at java.net.URLClassLoader.findClass(URLClassLoader.java:387)[0m
-[0m[[0m[31merror[0m] [0m[0m	at sbt.internal.ManagedClassLoader.findClass(ManagedClassLoader.java:103)[0m
-[0m[[0m[31merror[0m] [0m[0m	at java.lang.ClassLoader.loadClass(ClassLoader.java:418)[0m
-[0m[[0m[31merror[0m] [0m[0m	at java.lang.ClassLoader.loadClass(ClassLoader.java:351)[0m
-[0m[[0m[31merror[0m] [0m[0m	at java.lang.Class.forName0(Native Method)[0m
-[0m[[0m[31merror[0m] [0m[0m	at java.lang.Class.forName(Class.java:348)[0m
-[0m[[0m[31merror[0m] [0m[0m	at sbt.Run.getMainMethod(Run.scala:161)[0m
-[0m[[0m[31merror[0m] [0m[0m	at sbt.Run.execute$1(Run.scala:93)[0m
+[0m[[0m[31merror[0m] [0m[0mchisel3.package$ExpectedHardwareException: data to be connected 'UInt' must be hardware, not a bare Chisel type. Perhaps you forgot to wrap it in Wire(_) or IO(_)?[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.internal.requireIsHardware$.apply(Binding.scala:20)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.Data.connect(Data.scala:396)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.Data.$colon$eq(Data.scala:494)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CPUTop.$anonfun$splitInstruction$4(CPUTop.scala:105)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.WhenContext.<init>(When.scala:75)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.WhenContext.elsewhen(When.scala:55)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CPUTop.splitInstruction(CPUTop.scala:104)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CPUTop.<init>(CPUTop.scala:37)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CPUTopTester$.$anonfun$main$1(CPUTopTester.scala:100)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.Module$.do_apply(Module.scala:52)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.stage.ChiselGeneratorAnnotation.$anonfun$elaborate$1(ChiselAnnotations.scala:50)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.internal.Builder$.$anonfun$build$1(Builder.scala:414)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.util.DynamicVariable.withValue(DynamicVariable.scala:62)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.internal.Builder$.build(Builder.scala:412)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.stage.ChiselGeneratorAnnotation.elaborate(ChiselAnnotations.scala:50)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.stage.phases.Elaborate.$anonfun$transform$1(Elaborate.scala:19)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.TraversableLike.$anonfun$flatMap$1(TraversableLike.scala:244)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.List.foreach(List.scala:392)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.TraversableLike.flatMap(TraversableLike.scala:244)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.TraversableLike.flatMap$(TraversableLike.scala:241)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.List.flatMap(List.scala:355)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.stage.phases.Elaborate.transform(Elaborate.scala:18)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.iotesters.setupTreadleBackend$.apply(TreadleBackend.scala:143)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.iotesters.Driver$.$anonfun$execute$2(Driver.scala:53)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.runtime.java8.JFunction0$mcZ$sp.apply(JFunction0$mcZ$sp.java:23)[0m
+[0m[[0m[31merror[0m] [0m[0m	at logger.Logger$.$anonfun$makeScope$2(Logger.scala:168)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.util.DynamicVariable.withValue(DynamicVariable.scala:62)[0m
+[0m[[0m[31merror[0m] [0m[0m	at logger.Logger$.makeScope(Logger.scala:166)[0m
+[0m[[0m[31merror[0m] [0m[0m	at logger.Logger$.makeScope(Logger.scala:127)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.iotesters.Driver$.$anonfun$execute$1(Driver.scala:38)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.runtime.java8.JFunction0$mcZ$sp.apply(JFunction0$mcZ$sp.java:23)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.util.DynamicVariable.withValue(DynamicVariable.scala:62)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.iotesters.Driver$.execute(Driver.scala:38)[0m
+[0m[[0m[31merror[0m] [0m[0m	at chisel3.iotesters.Driver$.execute(Driver.scala:102)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CPUTopTester$.main(CPUTopTester.scala:101)[0m
+[0m[[0m[31merror[0m] [0m[0m	at CPUTopTester.main(CPUTopTester.scala)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.lang.reflect.Method.invoke(Method.java:498)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Run.invokeMain(Run.scala:144)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.Run.execute$1(Run.scala:94)[0m
 [0m[[0m[31merror[0m] [0m[0m	at sbt.Run.$anonfun$runWithLoader$5(Run.scala:121)[0m
 [0m[[0m[31merror[0m] [0m[0m	at sbt.Run$.executeSuccess(Run.scala:187)[0m
 [0m[[0m[31merror[0m] [0m[0m	at sbt.Run.runWithLoader(Run.scala:121)[0m
@@ -18,4 +53,4 @@
 [0m[[0m[31merror[0m] [0m[0m	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)[0m
 [0m[[0m[31merror[0m] [0m[0m	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)[0m
 [0m[[0m[31merror[0m] [0m[0m	at java.lang.Thread.run(Thread.java:750)[0m
-[0m[[0m[31merror[0m] [0m[0m(Test / [31mrunMain[0m) java.lang.ClassNotFoundException: ProramCounterTester[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mrunMain[0m) chisel3.package$ExpectedHardwareException: data to be connected 'UInt' must be hardware, not a bare Chisel type. Perhaps you forgot to wrap it in Wire(_) or IO(_)?[0m
