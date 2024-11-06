@@ -50,13 +50,13 @@ class CPUTop extends Module {
   // --- into register --- //
   private val from_memory_or_calc = Mux(
     controlUnit.io.memToReg,
-    dataMemory.io.dataRead,
+    dataMemory.io.dataRead, //.asSInt,
     alu.io.result
   )
   // val reg_load_or_immediate = Mux(
   //   controlUnit.io.regDst, _, _) // = load immediate, ?, ?
   registerFile.io.aSel := operand_2 // = aSel = regSrc_1
-  registerFile.io.aSel := operand_3 // = bSel = regSrc_2 or immediate value
+  registerFile.io.bSel := operand_3 // = bSel = regSrc_2 or immediate value
   registerFile.io.writeData := from_memory_or_calc
   registerFile.io.writeSel := operand_1 // regDst
   registerFile.io.writeEnable := controlUnit.io.regWriteEnable
@@ -94,25 +94,23 @@ class CPUTop extends Module {
 
 
     val opCode = instruction(3, 0);
-    val unused = 0.U;
-    val operand_1 = UInt();
-    val operand_2 = UInt();
-    val operand_3 = UInt();
+    val operand_1 = Wire(UInt(4.W));
+    val operand_2 = Wire(UInt(4.W));
+    val operand_3 = Wire(UInt(4.W));
+    operand_1 := 0.U;
+    operand_2 := 0.U;
+    operand_3 := 0.U;
 
     when (opCode === END) {
-      //return (opCode, unused , unused, unused);
     } .elsewhen (opCode === JR) {
-      operand_1 := instruction(31, 4);
-      // return (opCode, instruction(31, 4), unused, unused);
+      operand_1 := instruction(7, 4);
     } .elsewhen(opCode === LI || opCode === LD || opCode === SD) {
-      operand_1 := instruction(31, 4);
-      operand_2 := instruction(31, 8);
-      // return (opCode, instruction(7, 4), instruction(31, 8), unused);
-    } .otherwise {
-      operand_1 := instruction(31, 4);
+      operand_1 := instruction(7, 4);
       operand_2 := instruction(11, 8);
-      operand_3 := instruction(31, 12);
-      // return (opCode, instruction(7, 4), instruction(11, 8), instruction(31, 12));
+    } .otherwise {
+      operand_1 := instruction(7, 4);
+      operand_2 := instruction(11, 8);
+      operand_3 := instruction(15, 12);
     }
 
     return (opCode, operand_1, operand_2, operand_3)
@@ -124,13 +122,15 @@ class CPUTop extends Module {
     val JLT = 6.U;  // prog_mem_dst, regSrc_1, regSrc_1
     val JR = 7.U;   // prog_mem_dst
 
+    val out = Wire(Bool())
+    out := false.B;
     switch(opCode) {
-      is(JR)  { return true.B}
-      is(JLT) { return alu.io.result < 0.S}
-      is(JNEQ)  {return !alu.io.zero}
+      is(JR)  { out := true.B}
+      is(JLT) { out := alu.io.result < 0.U}
+      is(JNEQ){ out := !alu.io.zero}
     }
 
-    return false.B
+    return out
   }
 
   // ----------------------- OUR CODE END ----------------------- //

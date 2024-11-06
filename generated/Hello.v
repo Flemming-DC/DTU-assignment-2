@@ -1,9 +1,9 @@
 module DataMemory(
   input         clock,
   input  [15:0] io_address,
-  output [31:0] io_dataRead,
   input         io_writeEnable,
   input  [31:0] io_dataWrite,
+  output [31:0] io_dataRead,
   input         io_testerEnable,
   input  [15:0] io_testerAddress,
   output [31:0] io_testerDataRead,
@@ -13,25 +13,25 @@ module DataMemory(
 `ifdef RANDOMIZE_MEM_INIT
   reg [31:0] _RAND_0;
 `endif // RANDOMIZE_MEM_INIT
-  reg [31:0] memory [0:65535]; // @[DataMemory.scala 18:20]
-  wire [31:0] memory__T_data; // @[DataMemory.scala 18:20]
-  wire [15:0] memory__T_addr; // @[DataMemory.scala 18:20]
-  wire [31:0] memory__T_2_data; // @[DataMemory.scala 18:20]
-  wire [15:0] memory__T_2_addr; // @[DataMemory.scala 18:20]
-  wire [31:0] memory__T_1_data; // @[DataMemory.scala 18:20]
-  wire [15:0] memory__T_1_addr; // @[DataMemory.scala 18:20]
-  wire  memory__T_1_mask; // @[DataMemory.scala 18:20]
-  wire  memory__T_1_en; // @[DataMemory.scala 18:20]
-  wire [31:0] memory__T_3_data; // @[DataMemory.scala 18:20]
-  wire [15:0] memory__T_3_addr; // @[DataMemory.scala 18:20]
-  wire  memory__T_3_mask; // @[DataMemory.scala 18:20]
-  wire  memory__T_3_en; // @[DataMemory.scala 18:20]
-  wire [31:0] _GEN_5 = io_testerWriteEnable ? io_testerDataWrite : memory__T_data; // @[DataMemory.scala 24:32]
-  wire [31:0] _GEN_11 = io_writeEnable ? io_dataWrite : memory__T_2_data; // @[DataMemory.scala 32:26]
+  reg [31:0] memory [0:65535]; // @[DataMemory.scala 19:20]
+  wire [31:0] memory__T_data; // @[DataMemory.scala 19:20]
+  wire [15:0] memory__T_addr; // @[DataMemory.scala 19:20]
+  wire [31:0] memory__T_2_data; // @[DataMemory.scala 19:20]
+  wire [15:0] memory__T_2_addr; // @[DataMemory.scala 19:20]
+  wire [31:0] memory__T_1_data; // @[DataMemory.scala 19:20]
+  wire [15:0] memory__T_1_addr; // @[DataMemory.scala 19:20]
+  wire  memory__T_1_mask; // @[DataMemory.scala 19:20]
+  wire  memory__T_1_en; // @[DataMemory.scala 19:20]
+  wire [31:0] memory__T_3_data; // @[DataMemory.scala 19:20]
+  wire [15:0] memory__T_3_addr; // @[DataMemory.scala 19:20]
+  wire  memory__T_3_mask; // @[DataMemory.scala 19:20]
+  wire  memory__T_3_en; // @[DataMemory.scala 19:20]
+  wire [31:0] _GEN_5 = io_testerWriteEnable ? io_testerDataWrite : memory__T_data; // @[DataMemory.scala 25:32]
+  wire [31:0] _GEN_11 = io_writeEnable ? io_dataWrite : memory__T_2_data; // @[DataMemory.scala 33:26]
   assign memory__T_addr = io_testerAddress;
-  assign memory__T_data = memory[memory__T_addr]; // @[DataMemory.scala 18:20]
+  assign memory__T_data = memory[memory__T_addr]; // @[DataMemory.scala 19:20]
   assign memory__T_2_addr = io_address;
-  assign memory__T_2_data = memory[memory__T_2_addr]; // @[DataMemory.scala 18:20]
+  assign memory__T_2_data = memory[memory__T_2_addr]; // @[DataMemory.scala 19:20]
   assign memory__T_1_data = io_testerDataWrite;
   assign memory__T_1_addr = io_testerAddress;
   assign memory__T_1_mask = 1'h1;
@@ -40,8 +40,8 @@ module DataMemory(
   assign memory__T_3_addr = io_address;
   assign memory__T_3_mask = 1'h1;
   assign memory__T_3_en = io_testerEnable ? 1'h0 : io_writeEnable;
-  assign io_dataRead = io_testerEnable ? 32'h0 : _GEN_11; // @[DataMemory.scala 23:17 DataMemory.scala 30:17 DataMemory.scala 34:19]
-  assign io_testerDataRead = io_testerEnable ? _GEN_5 : 32'h0; // @[DataMemory.scala 22:23 DataMemory.scala 26:25 DataMemory.scala 31:23]
+  assign io_dataRead = io_testerEnable ? 32'h0 : _GEN_11; // @[DataMemory.scala 24:17 DataMemory.scala 31:17 DataMemory.scala 35:19]
+  assign io_testerDataRead = io_testerEnable ? _GEN_5 : 32'h0; // @[DataMemory.scala 23:23 DataMemory.scala 27:25 DataMemory.scala 32:23]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -89,10 +89,10 @@ end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
     if(memory__T_1_en & memory__T_1_mask) begin
-      memory[memory__T_1_addr] <= memory__T_1_data; // @[DataMemory.scala 18:20]
+      memory[memory__T_1_addr] <= memory__T_1_data; // @[DataMemory.scala 19:20]
     end
     if(memory__T_3_en & memory__T_3_mask) begin
-      memory[memory__T_3_addr] <= memory__T_3_data; // @[DataMemory.scala 18:20]
+      memory[memory__T_3_addr] <= memory__T_3_data; // @[DataMemory.scala 19:20]
     end
   end
 endmodule
@@ -113,9 +113,9 @@ module Hello(
 `endif // RANDOMIZE_REG_INIT
   wire  dataMemory_clock; // @[Hello.scala 33:26]
   wire [15:0] dataMemory_io_address; // @[Hello.scala 33:26]
-  wire [31:0] dataMemory_io_dataRead; // @[Hello.scala 33:26]
   wire  dataMemory_io_writeEnable; // @[Hello.scala 33:26]
   wire [31:0] dataMemory_io_dataWrite; // @[Hello.scala 33:26]
+  wire [31:0] dataMemory_io_dataRead; // @[Hello.scala 33:26]
   wire  dataMemory_io_testerEnable; // @[Hello.scala 33:26]
   wire [15:0] dataMemory_io_testerAddress; // @[Hello.scala 33:26]
   wire [31:0] dataMemory_io_testerDataRead; // @[Hello.scala 33:26]
@@ -131,9 +131,9 @@ module Hello(
   DataMemory dataMemory ( // @[Hello.scala 33:26]
     .clock(dataMemory_clock),
     .io_address(dataMemory_io_address),
-    .io_dataRead(dataMemory_io_dataRead),
     .io_writeEnable(dataMemory_io_writeEnable),
     .io_dataWrite(dataMemory_io_dataWrite),
+    .io_dataRead(dataMemory_io_dataRead),
     .io_testerEnable(dataMemory_io_testerEnable),
     .io_testerAddress(dataMemory_io_testerAddress),
     .io_testerDataRead(dataMemory_io_testerDataRead),

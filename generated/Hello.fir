@@ -3,29 +3,29 @@ circuit Hello :
   module DataMemory : 
     input clock : Clock
     input reset : Reset
-    output io : {flip address : UInt<16>, dataRead : UInt<32>, flip writeEnable : UInt<1>, flip dataWrite : UInt<32>, flip testerEnable : UInt<1>, flip testerAddress : UInt<16>, testerDataRead : UInt<32>, flip testerWriteEnable : UInt<1>, flip testerDataWrite : UInt<32>}
+    output io : {flip address : UInt<16>, flip writeEnable : UInt<1>, flip dataWrite : UInt<32>, dataRead : UInt<32>, flip testerEnable : UInt<1>, flip testerAddress : UInt<16>, testerDataRead : UInt<32>, flip testerWriteEnable : UInt<1>, flip testerDataWrite : UInt<32>}
     
-    cmem memory : UInt<32>[65536] @[DataMemory.scala 18:20]
-    when io.testerEnable : @[DataMemory.scala 20:24]
-      read mport _T = memory[io.testerAddress], clock @[DataMemory.scala 22:37]
-      io.testerDataRead <= _T @[DataMemory.scala 22:23]
-      io.dataRead <= UInt<32>("h00") @[DataMemory.scala 23:17]
-      when io.testerWriteEnable : @[DataMemory.scala 24:32]
+    cmem memory : UInt<32>[65536] @[DataMemory.scala 19:20]
+    when io.testerEnable : @[DataMemory.scala 21:24]
+      read mport _T = memory[io.testerAddress], clock @[DataMemory.scala 23:37]
+      io.testerDataRead <= _T @[DataMemory.scala 23:23]
+      io.dataRead <= UInt<32>("h00") @[DataMemory.scala 24:17]
+      when io.testerWriteEnable : @[DataMemory.scala 25:32]
         write mport _T_1 = memory[io.testerAddress], clock
         _T_1 <= io.testerDataWrite
-        io.testerDataRead <= io.testerDataWrite @[DataMemory.scala 26:25]
-        skip @[DataMemory.scala 24:32]
-      skip @[DataMemory.scala 20:24]
-    else : @[DataMemory.scala 28:16]
-      read mport _T_2 = memory[io.address], clock @[DataMemory.scala 30:31]
-      io.dataRead <= _T_2 @[DataMemory.scala 30:17]
-      io.testerDataRead <= UInt<32>("h00") @[DataMemory.scala 31:23]
-      when io.writeEnable : @[DataMemory.scala 32:26]
+        io.testerDataRead <= io.testerDataWrite @[DataMemory.scala 27:25]
+        skip @[DataMemory.scala 25:32]
+      skip @[DataMemory.scala 21:24]
+    else : @[DataMemory.scala 29:16]
+      read mport _T_2 = memory[io.address], clock @[DataMemory.scala 31:31]
+      io.dataRead <= _T_2 @[DataMemory.scala 31:17]
+      io.testerDataRead <= UInt<32>("h00") @[DataMemory.scala 32:23]
+      when io.writeEnable : @[DataMemory.scala 33:26]
         write mport _T_3 = memory[io.address], clock
         _T_3 <= io.dataWrite
-        io.dataRead <= io.dataWrite @[DataMemory.scala 34:19]
-        skip @[DataMemory.scala 32:26]
-      skip @[DataMemory.scala 28:16]
+        io.dataRead <= io.dataWrite @[DataMemory.scala 35:19]
+        skip @[DataMemory.scala 33:26]
+      skip @[DataMemory.scala 29:16]
     
   module Hello : 
     input clock : Clock
