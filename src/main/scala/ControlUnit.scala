@@ -20,18 +20,17 @@ class ControlUnit extends Module {
   //Implement this module here
 
   // opCodes
-  val LI = 0.U;
-  val LD = 1.U;
-  val SD = 9.U;
-  val ADDI = 2.U;
-  val ADD = 3.U;
-  val MULT = 4.U;
-  val JNEQ = 5.U;
-  val JLT = 6.U;
-  val JR = 7.U;
-  val END = 8.U;
-
-  // default
+  val LI   = 0.U(4.W); // 0000: reg, value
+  val LD   = 1.U(4.W); // 0001: regDst, mem
+  val SD   = 2.U(4.W); // 0010: mem, regSrc
+  val ADDI = 3.U(4.W); // 0011: regDst, regSrc, value
+  val ADD  = 4.U(4.W); // 0100: regDst, regSrc_1, regSrc_2
+  val MULT = 5.U(4.W); // 0101: regDst, regSrc_1, regSrc_2
+  val JNEQ = 6.U(4.W); // 0110: prog_mem_dst, regSrc_1, regSrc_1
+  val JLT  = 7.U(4.W); // 0111: prog_mem_dst, regSrc_1, regSrc_1
+  val JR   = 8.U(4.W); // 1000: prog_mem_dst
+  val END  = 9.U(4.W); // 1001:
+  val SUB  = 10.U(4.W);// 1010: regDst, regSrc, regSrc
 
 
   // aluOp
@@ -42,6 +41,7 @@ class ControlUnit extends Module {
     is(MULT) {io.aluOp := 1.U}
     is(JNEQ) {io.aluOp := 2.U}
     is(JLT)  {io.aluOp := 2.U}
+    is(SUB)  {io.aluOp := 2.U}
   }
   // aluSrc (vælg om vi bruger Immediate eller load fra register)
   // aluSrc = load immediate
@@ -52,6 +52,7 @@ class ControlUnit extends Module {
     is(MULT) {io.aluSrc := false.B}
     is(JNEQ) {io.aluSrc := false.B}
     is(JLT)  {io.aluSrc := false.B}
+    is(SUB)  {io.aluSrc := false.B}
   }
 
   io.regWriteEnable := false.B
@@ -59,6 +60,7 @@ class ControlUnit extends Module {
     is(ADD)  {io.regWriteEnable := true.B}
     is(ADDI) {io.regWriteEnable := true.B}
     is(MULT) {io.regWriteEnable := true.B}
+    is(SUB)  {io.regWriteEnable := true.B}
   }
   /*
   io.regDst := false.B // regDst = load immediate
@@ -77,6 +79,7 @@ class ControlUnit extends Module {
     is(ADDI) {io.memToReg := false.B}
     is(ADD) {io.memToReg := false.B}
     is(MULT)  {io.memToReg := false.B}
+    is(SUB)  {io.memToReg := false.B}
   }
 
   io.memWriteEnable := false.B

@@ -3,8 +3,8 @@ import chisel3.util._
 
 class RegisterFile extends Module {
   val io = IO(new Bundle {
-    val aSel = Input(UInt(4.W)) // select register for output a
-    val bSel = Input(UInt(4.W)) // select register for output b
+    val aSel = Input(UInt(12.W)) // select register for output a
+    val bSel = Input(UInt(12.W)) // select register for output b
     val writeData = Input(UInt(32.W)) // if (writeEnable) put writeData in writeSel
     val writeSel = Input(UInt(4.W)) // select register for writeData
     val writeEnable = Input(Bool())

@@ -1,3 +1,4 @@
-[debug] not up to date. inChanged = true, force = false
-[debug] Updating ProjectRef(uri("file:/C:/Mine/diverse/DTU/DTU-assignment-2/"), "dtu-assignment-2")...
-[debug] Done updating ProjectRef(uri("file:/C:/Mine/diverse/DTU/DTU-assignment-2/"), "dtu-assignment-2")
+[warn] scala-library-2.12.8-sources.jar no longer exists at C:\Users\flem1\AppData\Local\Coursier\Cache\v1\https\repo1.maven.org\maven2\org\scala-lang\scala-library\2.12.8\scala-library-2.12.8-sources.jar
+[debug] not up to date. inChanged = false, force = false
+[debug] Updating ProjectRef(uri("file:/C:/Mine/DTU/DTU-assignment-2/"), "dtu-assignment-2")...
+[debug] Done updating ProjectRef(uri("file:/C:/Mine/DTU/DTU-assignment-2/"), "dtu-assignment-2")

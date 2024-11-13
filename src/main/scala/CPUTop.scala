@@ -39,7 +39,7 @@ class CPUTop extends Module {
   // --- into programCounter --- //
   programCounter.io.run := io.run
   programCounter.io.stop := io.done
-  programCounter.io.jump := jump(alu, opCode, operand_1, operand_2, operand_3)
+  programCounter.io.jump := jump(alu, opCode)
   programCounter.io.programCounterJump := operand_1 // target destination reg_or_mem
 
   // --- into programMemory --- //
@@ -72,7 +72,7 @@ class CPUTop extends Module {
   alu.io.sel := controlUnit.io.aluOp
 
   // --- into Data Memory --- //
-  dataMemory.io.address := alu.io.result
+  dataMemory.io.address := alu.io.result // why alu result rather than register?
   dataMemory.io.writeEnable := controlUnit.io.memWriteEnable
   dataMemory.io.dataWrite := registerFile.io.b
 
@@ -83,20 +83,21 @@ class CPUTop extends Module {
     //  operation ---- inputs -------- //
     val LI   = 0.U(4.W); // reg, value
     val LD   = 1.U(4.W); // regDst, reg_or_mem
-    val SD   = 9.U(4.W); // reg_or_mem, regSrc
-    val ADDI = 2.U(4.W); // regDst, regSrc, value
-    val ADD  = 3.U(4.W); // regDst, regSrc_1, regSrc_2
-    val MULT = 4.U(4.W); // regDst, regSrc_1, regSrc_2
-    val JNEQ = 5.U(4.W); // prog_mem_dst, regSrc_1, regSrc_1
-    val JLT  = 6.U(4.W); // prog_mem_dst, regSrc_1, regSrc_1
-    val JR   = 7.U(4.W); // prog_mem_dst
-    val END  = 8.U(4.W); //
+    val SD   = 2.U(4.W); // reg_or_mem, regSrc
+    val ADDI = 3.U(4.W); // regDst, regSrc, value
+    val ADD  = 4.U(4.W); // regDst, regSrc_1, regSrc_2
+    val MULT = 5.U(4.W); // regDst, regSrc_1, regSrc_2
+    val JNEQ = 6.U(4.W); // prog_mem_dst, regSrc_1, regSrc_1
+    val JLT  = 7.U(4.W); // prog_mem_dst, regSrc_1, regSrc_1
+    val JR   = 8.U(4.W); // prog_mem_dst
+    val END  = 9.U(4.W); //
+    val SUB  = 10.U(4.W);// regDst, regSrc, regSrc
 
 
     val opCode = instruction(3, 0);
-    val operand_1 = Wire(UInt(4.W));
-    val operand_2 = Wire(UInt(4.W));
-    val operand_3 = Wire(UInt(4.W));
+    val operand_1 = Wire(UInt(8.W));
+    val operand_2 = Wire(UInt(10.W));
+    val operand_3 = Wire(UInt(10.W));
     operand_1 := 0.U;
     operand_2 := 0.U;
     operand_3 := 0.U;
@@ -105,22 +106,22 @@ class CPUTop extends Module {
     } .elsewhen (opCode === JR) {
       operand_1 := instruction(7, 4);
     } .elsewhen(opCode === LI || opCode === LD || opCode === SD) {
-      operand_1 := instruction(7, 4);
-      operand_2 := instruction(11, 8);
+      operand_1 := instruction(11, 4);
+      operand_2 := instruction(21, 12);
     } .otherwise {
-      operand_1 := instruction(7, 4);
-      operand_2 := instruction(11, 8);
-      operand_3 := instruction(15, 12);
+      operand_1 := instruction(11, 4);
+      operand_2 := instruction(21, 12);
+      operand_3 := instruction(31, 22);
     }
 
     return (opCode, operand_1, operand_2, operand_3)
 
   }
 
-  private def jump(alu: ALU, opCode: UInt, operand_1: UInt, operand_2: UInt, operand_3: UInt): Bool = {
-    val JNEQ = 5.U; // prog_mem_dst, regSrc_1, regSrc_1
-    val JLT = 6.U;  // prog_mem_dst, regSrc_1, regSrc_1
-    val JR = 7.U;   // prog_mem_dst
+  private def jump(alu: ALU, opCode: UInt): Bool = {
+    val JNEQ = 6.U; // prog_mem_dst, regSrc_1, regSrc_1
+    val JLT = 7.U;  // prog_mem_dst, regSrc_1, regSrc_1
+    val JR = 8.U;   // prog_mem_dst
 
     val out = Wire(Bool())
     out := false.B;
