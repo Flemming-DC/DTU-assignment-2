@@ -137,7 +137,7 @@ val program1 = program_erosion;
 
 //val program1 = Array("h00000000".U(32.W))
 
-
+/*
 val program2 = Array(
   "h00000000".U(32.W),
   "h00000000".U(32.W),
@@ -152,5 +152,5 @@ val program2 = Array(
   "h00000000".U(32.W),
   "h00000000".U(32.W)
 )
-
+*/
 }

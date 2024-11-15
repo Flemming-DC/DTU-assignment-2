@@ -49,7 +49,7 @@ class CPUTop extends Module {
   // --- into programMemory --- //
   programMemory.io.address := programCounter.io.programCounter
   // --- into controlUnit --- //
-  controlUnit.io.instruction := opCode
+  controlUnit.io.opCode := opCode
 
   // --- into register --- //
   private val from_memory_or_calc = Mux(

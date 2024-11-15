@@ -3,34 +3,34 @@ import chisel3.iotesters.PeekPokeTester
 
 class ControlUnitTester(dut: ControlUnit) extends PeekPokeTester(dut) {
 
-  poke(dut.io.instruction, 0.U) // LI (Load Immediate)
+  poke(dut.io.opCode, 0.U) // LI (Load Immediate)
   step(1)
 
-  poke(dut.io.instruction, 1.U) // LD (Load from Memory)
+  poke(dut.io.opCode, 1.U) // LD (Load from Memory)
   step(1)
 
-  poke(dut.io.instruction, 9.U) // SD (Store to Memory)
+  poke(dut.io.opCode, 9.U) // SD (Store to Memory)
   step(1)
 
-  poke(dut.io.instruction, 2.U) // ADDI (Add Immediate)
+  poke(dut.io.opCode, 2.U) // ADDI (Add Immediate)
   step(1)
 
-  poke(dut.io.instruction, 3.U) // ADD (Addition)
+  poke(dut.io.opCode, 3.U) // ADD (Addition)
   step(1)
 
-  poke(dut.io.instruction, 4.U) // MULT (Multiply)
+  poke(dut.io.opCode, 4.U) // MULT (Multiply)
   step(1)
 
-  poke(dut.io.instruction, 5.U) // JNEQ (Jump if Not Equal)
+  poke(dut.io.opCode, 5.U) // JNEQ (Jump if Not Equal)
   step(1)
 
-  poke(dut.io.instruction, 6.U) // JLT (Jump if Less Than)
+  poke(dut.io.opCode, 6.U) // JLT (Jump if Less Than)
   step(1)
 
-  poke(dut.io.instruction, 7.U) // JR (Jump Register)
+  poke(dut.io.opCode, 7.U) // JR (Jump Register)
   step(1)
 
-  poke(dut.io.instruction, 8.U) // END (End of Program)
+  poke(dut.io.opCode, 8.U) // END (End of Program)
   step(1)
 }
 

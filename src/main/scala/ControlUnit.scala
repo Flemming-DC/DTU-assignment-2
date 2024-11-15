@@ -3,7 +3,7 @@ import chisel3.util._
 
 class ControlUnit extends Module {
   val io = IO(new Bundle {
-    val instruction = Input(UInt(4.W)) // opCode
+    val opCode = Input(UInt(4.W)) // opCode
 
     //val regDst = Output(Bool()) // load immediate
     val regWriteEnable = Output(Bool()) // regWrite
@@ -35,7 +35,7 @@ class ControlUnit extends Module {
 
   // aluOp
   io.aluOp := 0.U
-  switch(io.instruction) {
+  switch(io.opCode) {
     is(ADD)  {io.aluOp := 0.U}
     is(ADDI) {io.aluOp := 0.U}
     is(MULT) {io.aluOp := 1.U}
@@ -46,7 +46,7 @@ class ControlUnit extends Module {
   // aluSrc (vælg om vi bruger Immediate eller load fra register)
   // aluSrc = load immediate
   io.aluSrc := false.B
-  switch(io.instruction) {
+  switch(io.opCode) {
     is(ADD)  {io.aluSrc := false.B}
     is(ADDI) {io.aluSrc := true.B}
     is(MULT) {io.aluSrc := false.B}
@@ -56,7 +56,7 @@ class ControlUnit extends Module {
   }
 
   io.regWriteEnable := false.B
-  switch(io.instruction) {
+  switch(io.opCode) {
     is(ADD)  {io.regWriteEnable := true.B}
     is(ADDI) {io.regWriteEnable := true.B}
     is(MULT) {io.regWriteEnable := true.B}
@@ -74,7 +74,7 @@ class ControlUnit extends Module {
   */
 
   io.memToReg := false.B // take data from memory rather than from calculation
-  switch(io.instruction) {
+  switch(io.opCode) {
     is(LD) {io.memToReg := true.B}
     is(ADDI) {io.memToReg := false.B}
     is(ADD) {io.memToReg := false.B}
@@ -83,7 +83,7 @@ class ControlUnit extends Module {
   }
 
   io.memWriteEnable := false.B
-  switch(io.instruction) {
+  switch(io.opCode) {
     is(SD) {io.memWriteEnable := true.B}
   }
 /*

@@ -487,19 +487,19 @@ end // initial
   end
 endmodule
 module ControlUnit(
-  input  [3:0] io_instruction,
+  input  [3:0] io_opCode,
   output       io_regWriteEnable,
   output [1:0] io_aluOp,
   output       io_aluSrc,
   output       io_memToReg,
   output       io_memWriteEnable
 );
-  wire  _T = 4'h4 == io_instruction; // @[Conditional.scala 37:30]
-  wire  _T_1 = 4'h3 == io_instruction; // @[Conditional.scala 37:30]
-  wire  _T_2 = 4'h5 == io_instruction; // @[Conditional.scala 37:30]
-  wire  _T_3 = 4'h6 == io_instruction; // @[Conditional.scala 37:30]
-  wire  _T_4 = 4'h7 == io_instruction; // @[Conditional.scala 37:30]
-  wire  _T_5 = 4'ha == io_instruction; // @[Conditional.scala 37:30]
+  wire  _T = 4'h4 == io_opCode; // @[Conditional.scala 37:30]
+  wire  _T_1 = 4'h3 == io_opCode; // @[Conditional.scala 37:30]
+  wire  _T_2 = 4'h5 == io_opCode; // @[Conditional.scala 37:30]
+  wire  _T_3 = 4'h6 == io_opCode; // @[Conditional.scala 37:30]
+  wire  _T_4 = 4'h7 == io_opCode; // @[Conditional.scala 37:30]
+  wire  _T_5 = 4'ha == io_opCode; // @[Conditional.scala 37:30]
   wire [1:0] _GEN_0 = _T_5 ? 2'h2 : 2'h0; // @[Conditional.scala 39:67]
   wire [1:0] _GEN_1 = _T_4 ? 2'h2 : _GEN_0; // @[Conditional.scala 39:67]
   wire [1:0] _GEN_2 = _T_3 ? 2'h2 : _GEN_1; // @[Conditional.scala 39:67]
@@ -510,8 +510,8 @@ module ControlUnit(
   assign io_regWriteEnable = _T | _GEN_14; // @[ControlUnit.scala 58:21 ControlUnit.scala 60:33 ControlUnit.scala 61:33 ControlUnit.scala 62:33 ControlUnit.scala 63:33]
   assign io_aluOp = _T ? 2'h0 : _GEN_4; // @[ControlUnit.scala 37:12 ControlUnit.scala 39:24 ControlUnit.scala 40:24 ControlUnit.scala 41:24 ControlUnit.scala 42:24 ControlUnit.scala 43:24 ControlUnit.scala 44:24]
   assign io_aluSrc = _T ? 1'h0 : _T_1; // @[ControlUnit.scala 48:13 ControlUnit.scala 50:25 ControlUnit.scala 51:25 ControlUnit.scala 52:25 ControlUnit.scala 53:25 ControlUnit.scala 54:25 ControlUnit.scala 55:25]
-  assign io_memToReg = 4'h1 == io_instruction; // @[ControlUnit.scala 76:15 ControlUnit.scala 78:25 ControlUnit.scala 79:27 ControlUnit.scala 80:26 ControlUnit.scala 81:28 ControlUnit.scala 82:27]
-  assign io_memWriteEnable = 4'h2 == io_instruction; // @[ControlUnit.scala 85:21 ControlUnit.scala 87:31]
+  assign io_memToReg = 4'h1 == io_opCode; // @[ControlUnit.scala 76:15 ControlUnit.scala 78:25 ControlUnit.scala 79:27 ControlUnit.scala 80:26 ControlUnit.scala 81:28 ControlUnit.scala 82:27]
+  assign io_memWriteEnable = 4'h2 == io_opCode; // @[ControlUnit.scala 85:21 ControlUnit.scala 87:31]
 endmodule
 module ALU(
   input  [31:0] io_x,
@@ -581,7 +581,7 @@ module CPUTop(
   wire  RegisterFile_io_writeEnable; // @[CPUTop.scala 31:36]
   wire [31:0] RegisterFile_io_a; // @[CPUTop.scala 31:36]
   wire [31:0] RegisterFile_io_b; // @[CPUTop.scala 31:36]
-  wire [3:0] ControlUnit_io_instruction; // @[CPUTop.scala 32:35]
+  wire [3:0] ControlUnit_io_opCode; // @[CPUTop.scala 32:35]
   wire  ControlUnit_io_regWriteEnable; // @[CPUTop.scala 32:35]
   wire [1:0] ControlUnit_io_aluOp; // @[CPUTop.scala 32:35]
   wire  ControlUnit_io_aluSrc; // @[CPUTop.scala 32:35]
@@ -656,7 +656,7 @@ module CPUTop(
     .io_b(RegisterFile_io_b)
   );
   ControlUnit ControlUnit ( // @[CPUTop.scala 32:35]
-    .io_instruction(ControlUnit_io_instruction),
+    .io_opCode(ControlUnit_io_opCode),
     .io_regWriteEnable(ControlUnit_io_regWriteEnable),
     .io_aluOp(ControlUnit_io_aluOp),
     .io_aluSrc(ControlUnit_io_aluSrc),
@@ -699,7 +699,7 @@ module CPUTop(
   assign RegisterFile_io_writeData = ControlUnit_io_memToReg ? DataMemory_io_dataRead : ALU_io_result; // @[CPUTop.scala 64:29]
   assign RegisterFile_io_writeSel = _GEN_6[3:0]; // @[CPUTop.scala 65:28]
   assign RegisterFile_io_writeEnable = ControlUnit_io_regWriteEnable; // @[CPUTop.scala 66:31]
-  assign ControlUnit_io_instruction = ProgramMemory_io_instructionRead[3:0]; // @[CPUTop.scala 52:30]
+  assign ControlUnit_io_opCode = ProgramMemory_io_instructionRead[3:0]; // @[CPUTop.scala 52:25]
   assign ALU_io_x = RegisterFile_io_a; // @[CPUTop.scala 74:12]
   assign ALU_io_y = ControlUnit_io_aluSrc ? {{22'd0}, _GEN_8} : RegisterFile_io_b; // @[CPUTop.scala 75:12]
   assign ALU_io_sel = ControlUnit_io_aluOp; // @[CPUTop.scala 76:14]
