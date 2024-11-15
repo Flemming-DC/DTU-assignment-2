@@ -35,6 +35,10 @@ class CPUTop extends Module {
 
   io.done := false.B
   private val (opCode, operand_1, operand_2, operand_3) = splitInstruction(programMemory.io.instructionRead)
+  val END  = 9.U(4.W); //
+  when (opCode === END) {
+    io.done := true.B
+  }
 
   // --- into programCounter --- //
   programCounter.io.run := io.run
@@ -103,6 +107,7 @@ class CPUTop extends Module {
     operand_3 := 0.U;
 
     when (opCode === END) {
+
     } .elsewhen (opCode === JR) {
       operand_1 := instruction(7, 4);
     } .elsewhen(opCode === LI || opCode === LD || opCode === SD) {

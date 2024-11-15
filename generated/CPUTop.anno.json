@@ -1,6 +1,13 @@
 [
   {
     "class":"firrtl.transforms.CombinationalPath",
+    "sink":"~CPUTop|CPUTop>io_done",
+    "sources":[
+      "~CPUTop|CPUTop>io_testerProgMemEnable"
+    ]
+  },
+  {
+    "class":"firrtl.transforms.CombinationalPath",
     "sink":"~CPUTop|CPUTop>io_testerDataMemDataRead",
     "sources":[
       "~CPUTop|CPUTop>io_testerDataMemEnable",
