@@ -505,32 +505,38 @@ module ControlUnit(
   wire [1:0] _GEN_2 = _T_3 ? 2'h2 : _GEN_1; // @[Conditional.scala 39:67]
   wire [1:0] _GEN_3 = _T_2 ? 2'h1 : _GEN_2; // @[Conditional.scala 39:67]
   wire [1:0] _GEN_4 = _T_1 ? 2'h0 : _GEN_3; // @[Conditional.scala 39:67]
+  wire  _T_12 = 4'h0 == io_opCode; // @[Conditional.scala 37:30]
+  wire  _T_13 = 4'h1 == io_opCode; // @[Conditional.scala 37:30]
   wire  _GEN_13 = _T_2 | _T_5; // @[Conditional.scala 39:67]
   wire  _GEN_14 = _T_1 | _GEN_13; // @[Conditional.scala 39:67]
-  assign io_regWriteEnable = _T | _GEN_14; // @[ControlUnit.scala 58:21 ControlUnit.scala 60:33 ControlUnit.scala 61:33 ControlUnit.scala 62:33 ControlUnit.scala 63:33]
+  wire  _GEN_15 = _T | _GEN_14; // @[Conditional.scala 39:67]
+  wire  _GEN_16 = _T_13 | _GEN_15; // @[Conditional.scala 39:67]
+  assign io_regWriteEnable = _T_12 | _GEN_16; // @[ControlUnit.scala 58:21 ControlUnit.scala 60:33 ControlUnit.scala 61:33 ControlUnit.scala 62:33 ControlUnit.scala 63:33 ControlUnit.scala 64:33 ControlUnit.scala 65:33]
   assign io_aluOp = _T ? 2'h0 : _GEN_4; // @[ControlUnit.scala 37:12 ControlUnit.scala 39:24 ControlUnit.scala 40:24 ControlUnit.scala 41:24 ControlUnit.scala 42:24 ControlUnit.scala 43:24 ControlUnit.scala 44:24]
   assign io_aluSrc = _T ? 1'h0 : _T_1; // @[ControlUnit.scala 48:13 ControlUnit.scala 50:25 ControlUnit.scala 51:25 ControlUnit.scala 52:25 ControlUnit.scala 53:25 ControlUnit.scala 54:25 ControlUnit.scala 55:25]
-  assign io_memToReg = 4'h1 == io_opCode; // @[ControlUnit.scala 76:15 ControlUnit.scala 78:25 ControlUnit.scala 79:27 ControlUnit.scala 80:26 ControlUnit.scala 81:28 ControlUnit.scala 82:27]
-  assign io_memWriteEnable = 4'h2 == io_opCode; // @[ControlUnit.scala 85:21 ControlUnit.scala 87:31]
+  assign io_memToReg = 4'h1 == io_opCode; // @[ControlUnit.scala 78:15 ControlUnit.scala 80:25 ControlUnit.scala 81:27 ControlUnit.scala 82:26 ControlUnit.scala 83:28 ControlUnit.scala 84:27]
+  assign io_memWriteEnable = 4'h2 == io_opCode; // @[ControlUnit.scala 87:21 ControlUnit.scala 89:31]
 endmodule
 module ALU(
   input  [31:0] io_x,
   input  [31:0] io_y,
   input  [1:0]  io_sel,
   output [31:0] io_result,
-  output        io_zero
+  output        io_zero,
+  output        io_less_than
 );
   wire  _T = 2'h0 == io_sel; // @[Conditional.scala 37:30]
-  wire [31:0] _T_2 = io_x + io_y; // @[ALU.scala 22:33]
+  wire [31:0] _T_2 = io_x + io_y; // @[ALU.scala 23:33]
   wire  _T_3 = 2'h1 == io_sel; // @[Conditional.scala 37:30]
-  wire [63:0] _T_4 = io_x * io_y; // @[ALU.scala 23:33]
+  wire [63:0] _T_4 = io_x * io_y; // @[ALU.scala 24:33]
   wire  _T_5 = 2'h2 == io_sel; // @[Conditional.scala 37:30]
-  wire [31:0] _T_7 = io_x - io_y; // @[ALU.scala 24:33]
+  wire [31:0] _T_7 = io_x - io_y; // @[ALU.scala 25:33]
   wire [31:0] _GEN_0 = _T_5 ? _T_7 : 32'h0; // @[Conditional.scala 39:67]
   wire [63:0] _GEN_1 = _T_3 ? _T_4 : {{32'd0}, _GEN_0}; // @[Conditional.scala 39:67]
   wire [63:0] _GEN_2 = _T ? {{32'd0}, _T_2} : _GEN_1; // @[Conditional.scala 40:58]
-  assign io_result = _GEN_2[31:0]; // @[ALU.scala 19:13 ALU.scala 22:25 ALU.scala 23:25 ALU.scala 24:25]
-  assign io_zero = io_result == 32'h0; // @[ALU.scala 26:11]
+  assign io_result = _GEN_2[31:0]; // @[ALU.scala 20:13 ALU.scala 23:25 ALU.scala 24:25 ALU.scala 25:25]
+  assign io_zero = io_result == 32'h0; // @[ALU.scala 27:11]
+  assign io_less_than = io_x < io_y; // @[ALU.scala 28:16]
 endmodule
 module CPUTop(
   input         clock,
@@ -592,28 +598,15 @@ module CPUTop(
   wire [1:0] ALU_io_sel; // @[CPUTop.scala 33:27]
   wire [31:0] ALU_io_result; // @[CPUTop.scala 33:27]
   wire  ALU_io_zero; // @[CPUTop.scala 33:27]
-  wire  _T_4 = ProgramMemory_io_instructionRead[3:0] == 4'h9; // @[CPUTop.scala 109:18]
-  wire  _T_5 = ProgramMemory_io_instructionRead[3:0] == 4'h8; // @[CPUTop.scala 111:25]
-  wire  _T_7 = ProgramMemory_io_instructionRead[3:0] == 4'h0; // @[CPUTop.scala 113:24]
-  wire  _T_8 = ProgramMemory_io_instructionRead[3:0] == 4'h1; // @[CPUTop.scala 113:41]
-  wire  _T_9 = _T_7 | _T_8; // @[CPUTop.scala 113:31]
-  wire  _T_10 = ProgramMemory_io_instructionRead[3:0] == 4'h2; // @[CPUTop.scala 113:58]
-  wire  _T_11 = _T_9 | _T_10; // @[CPUTop.scala 113:48]
-  wire [7:0] _GEN_0 = _T_11 ? ProgramMemory_io_instructionRead[11:4] : ProgramMemory_io_instructionRead[11:4]; // @[CPUTop.scala 113:66]
-  wire [9:0] _GEN_1 = _T_11 ? ProgramMemory_io_instructionRead[21:12] : ProgramMemory_io_instructionRead[21:12]; // @[CPUTop.scala 113:66]
-  wire [9:0] _GEN_2 = _T_11 ? 10'h0 : ProgramMemory_io_instructionRead[31:22]; // @[CPUTop.scala 113:66]
-  wire [7:0] _GEN_3 = _T_5 ? {{4'd0}, ProgramMemory_io_instructionRead[7:4]} : _GEN_0; // @[CPUTop.scala 111:33]
-  wire [9:0] _GEN_4 = _T_5 ? 10'h0 : _GEN_1; // @[CPUTop.scala 111:33]
-  wire [9:0] _GEN_5 = _T_5 ? 10'h0 : _GEN_2; // @[CPUTop.scala 111:33]
-  wire [7:0] _GEN_6 = _T_4 ? 8'h0 : _GEN_3; // @[CPUTop.scala 109:27]
-  wire [9:0] _GEN_7 = _T_4 ? 10'h0 : _GEN_4; // @[CPUTop.scala 109:27]
-  wire [9:0] _GEN_8 = _T_4 ? 10'h0 : _GEN_5; // @[CPUTop.scala 109:27]
-  wire  _T_19 = 4'h8 == ProgramMemory_io_instructionRead[3:0]; // @[Conditional.scala 37:30]
-  wire  _T_20 = 4'h7 == ProgramMemory_io_instructionRead[3:0]; // @[Conditional.scala 37:30]
-  wire  _T_22 = 4'h6 == ProgramMemory_io_instructionRead[3:0]; // @[Conditional.scala 37:30]
-  wire  _T_23 = ~ALU_io_zero; // @[CPUTop.scala 136:24]
-  wire  _GEN_10 = _T_22 & _T_23; // @[Conditional.scala 39:67]
-  wire  _GEN_11 = _T_20 ? 1'h0 : _GEN_10; // @[Conditional.scala 39:67]
+  wire  ALU_io_less_than; // @[CPUTop.scala 33:27]
+  wire  _T_6 = 4'h8 == ProgramMemory_io_instructionRead[31:28]; // @[Conditional.scala 37:30]
+  wire  _T_7 = 4'h7 == ProgramMemory_io_instructionRead[31:28]; // @[Conditional.scala 37:30]
+  wire  _T_8 = 4'h6 == ProgramMemory_io_instructionRead[31:28]; // @[Conditional.scala 37:30]
+  wire  _T_9 = ~ALU_io_zero; // @[CPUTop.scala 108:24]
+  wire  _GEN_0 = _T_8 & _T_9; // @[Conditional.scala 39:67]
+  wire  _GEN_1 = _T_7 ? ALU_io_less_than : _GEN_0; // @[Conditional.scala 39:67]
+  wire  _T_10 = ProgramMemory_io_instructionRead[31:28] == 4'h0; // @[CPUTop.scala 55:16]
+  wire [31:0] _T_11 = _T_10 ? {{22'd0}, ProgramMemory_io_instructionRead[19:10]} : ALU_io_result; // @[CPUTop.scala 55:8]
   ProgramCounter ProgramCounter ( // @[CPUTop.scala 28:38]
     .clock(ProgramCounter_clock),
     .reset(ProgramCounter_reset),
@@ -668,39 +661,40 @@ module CPUTop(
     .io_y(ALU_io_y),
     .io_sel(ALU_io_sel),
     .io_result(ALU_io_result),
-    .io_zero(ALU_io_zero)
+    .io_zero(ALU_io_zero),
+    .io_less_than(ALU_io_less_than)
   );
-  assign io_done = ProgramMemory_io_instructionRead[3:0] == 4'h9; // @[CPUTop.scala 36:11 CPUTop.scala 40:13]
-  assign io_testerDataMemDataRead = DataMemory_io_testerDataRead; // @[CPUTop.scala 151:28]
-  assign io_testerProgMemDataRead = ProgramMemory_io_testerDataRead; // @[CPUTop.scala 145:28]
+  assign io_done = ProgramMemory_io_instructionRead[31:28] == 4'h9; // @[CPUTop.scala 38:11]
+  assign io_testerDataMemDataRead = DataMemory_io_testerDataRead; // @[CPUTop.scala 123:28]
+  assign io_testerProgMemDataRead = ProgramMemory_io_testerDataRead; // @[CPUTop.scala 117:28]
   assign ProgramCounter_clock = clock;
   assign ProgramCounter_reset = reset;
-  assign ProgramCounter_io_run = io_run; // @[CPUTop.scala 44:25]
-  assign ProgramCounter_io_stop = io_done; // @[CPUTop.scala 45:26]
-  assign ProgramCounter_io_jump = _T_19 | _GEN_11; // @[CPUTop.scala 46:26]
-  assign ProgramCounter_io_programCounterJump = {{8'd0}, _GEN_6}; // @[CPUTop.scala 47:40]
+  assign ProgramCounter_io_run = io_run; // @[CPUTop.scala 41:25]
+  assign ProgramCounter_io_stop = io_done; // @[CPUTop.scala 42:26]
+  assign ProgramCounter_io_jump = _T_6 | _GEN_1; // @[CPUTop.scala 43:26]
+  assign ProgramCounter_io_programCounterJump = {{8'd0}, ProgramMemory_io_instructionRead[27:20]}; // @[CPUTop.scala 44:40]
   assign DataMemory_clock = clock;
-  assign DataMemory_io_address = ALU_io_result[15:0]; // @[CPUTop.scala 79:25]
-  assign DataMemory_io_writeEnable = ControlUnit_io_memWriteEnable; // @[CPUTop.scala 80:29]
-  assign DataMemory_io_dataWrite = RegisterFile_io_b; // @[CPUTop.scala 81:27]
-  assign DataMemory_io_testerEnable = io_testerDataMemEnable; // @[CPUTop.scala 153:30]
-  assign DataMemory_io_testerAddress = io_testerDataMemAddress; // @[CPUTop.scala 150:31]
-  assign DataMemory_io_testerWriteEnable = io_testerDataMemWriteEnable; // @[CPUTop.scala 154:35]
-  assign DataMemory_io_testerDataWrite = io_testerDataMemDataWrite; // @[CPUTop.scala 152:33]
+  assign DataMemory_io_address = {{8'd0}, ProgramMemory_io_instructionRead[27:20]}; // @[CPUTop.scala 78:25]
+  assign DataMemory_io_writeEnable = ControlUnit_io_memWriteEnable; // @[CPUTop.scala 79:29]
+  assign DataMemory_io_dataWrite = RegisterFile_io_a; // @[CPUTop.scala 80:27]
+  assign DataMemory_io_testerEnable = io_testerDataMemEnable; // @[CPUTop.scala 125:30]
+  assign DataMemory_io_testerAddress = io_testerDataMemAddress; // @[CPUTop.scala 122:31]
+  assign DataMemory_io_testerWriteEnable = io_testerDataMemWriteEnable; // @[CPUTop.scala 126:35]
+  assign DataMemory_io_testerDataWrite = io_testerDataMemDataWrite; // @[CPUTop.scala 124:33]
   assign ProgramMemory_clock = clock;
-  assign ProgramMemory_io_address = ProgramCounter_io_programCounter; // @[CPUTop.scala 50:28]
-  assign ProgramMemory_io_testerEnable = io_testerProgMemEnable; // @[CPUTop.scala 147:33]
-  assign ProgramMemory_io_testerAddress = io_testerProgMemAddress; // @[CPUTop.scala 144:34]
-  assign ProgramMemory_io_testerWriteEnable = io_testerProgMemWriteEnable; // @[CPUTop.scala 148:38]
-  assign ProgramMemory_io_testerDataWrite = io_testerProgMemDataWrite; // @[CPUTop.scala 146:36]
+  assign ProgramMemory_io_address = ProgramCounter_io_programCounter; // @[CPUTop.scala 47:28]
+  assign ProgramMemory_io_testerEnable = io_testerProgMemEnable; // @[CPUTop.scala 119:33]
+  assign ProgramMemory_io_testerAddress = io_testerProgMemAddress; // @[CPUTop.scala 116:34]
+  assign ProgramMemory_io_testerWriteEnable = io_testerProgMemWriteEnable; // @[CPUTop.scala 120:38]
+  assign ProgramMemory_io_testerDataWrite = io_testerProgMemDataWrite; // @[CPUTop.scala 118:36]
   assign RegisterFile_clock = clock;
-  assign RegisterFile_io_aSel = {{2'd0}, _GEN_7}; // @[CPUTop.scala 62:24]
-  assign RegisterFile_io_bSel = {{2'd0}, _GEN_8}; // @[CPUTop.scala 63:24]
-  assign RegisterFile_io_writeData = ControlUnit_io_memToReg ? DataMemory_io_dataRead : ALU_io_result; // @[CPUTop.scala 64:29]
-  assign RegisterFile_io_writeSel = _GEN_6[3:0]; // @[CPUTop.scala 65:28]
-  assign RegisterFile_io_writeEnable = ControlUnit_io_regWriteEnable; // @[CPUTop.scala 66:31]
-  assign ControlUnit_io_opCode = ProgramMemory_io_instructionRead[3:0]; // @[CPUTop.scala 52:25]
-  assign ALU_io_x = RegisterFile_io_a; // @[CPUTop.scala 74:12]
-  assign ALU_io_y = ControlUnit_io_aluSrc ? {{22'd0}, _GEN_8} : RegisterFile_io_b; // @[CPUTop.scala 75:12]
-  assign ALU_io_sel = ControlUnit_io_aluOp; // @[CPUTop.scala 76:14]
+  assign RegisterFile_io_aSel = {{2'd0}, ProgramMemory_io_instructionRead[19:10]}; // @[CPUTop.scala 61:24]
+  assign RegisterFile_io_bSel = {{2'd0}, ProgramMemory_io_instructionRead[9:0]}; // @[CPUTop.scala 62:24]
+  assign RegisterFile_io_writeData = ControlUnit_io_memToReg ? DataMemory_io_dataRead : _T_11; // @[CPUTop.scala 63:29]
+  assign RegisterFile_io_writeSel = ProgramMemory_io_instructionRead[23:20]; // @[CPUTop.scala 64:28]
+  assign RegisterFile_io_writeEnable = ControlUnit_io_regWriteEnable; // @[CPUTop.scala 65:31]
+  assign ControlUnit_io_opCode = ProgramMemory_io_instructionRead[31:28]; // @[CPUTop.scala 49:25]
+  assign ALU_io_x = RegisterFile_io_a; // @[CPUTop.scala 73:12]
+  assign ALU_io_y = ControlUnit_io_aluSrc ? {{22'd0}, ProgramMemory_io_instructionRead[9:0]} : RegisterFile_io_b; // @[CPUTop.scala 74:12]
+  assign ALU_io_sel = ControlUnit_io_aluOp; // @[CPUTop.scala 75:14]
 endmodule

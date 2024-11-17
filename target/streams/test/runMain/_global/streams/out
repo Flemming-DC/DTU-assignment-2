@@ -1,16 +1,2 @@
-[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.PassExceptions: [0m
-[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  @[CPUTop.scala 100:25] : [module CPUTop]  Reference _T_3 is not fully initialized.[0m
-[0m[[0m[31merror[0m] [0m[0m   @[CPUTop.scala 114:17] : _T_3 <= mux(_T_4, VOID, mux(_T_5, VOID, mux(_T_11, VOID, _T_16))) @[CPUTop.scala 114:17][0m
-[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  @[CPUTop.scala 99:25] : [module CPUTop]  Reference _T_2 is not fully initialized.[0m
-[0m[[0m[31merror[0m] [0m[0m   @[CPUTop.scala 109:17 CPUTop.scala 113:17] : _T_2 <= mux(_T_4, VOID, mux(_T_5, VOID, _GEN_1)) @[CPUTop.scala 109:17 CPUTop.scala 113:17][0m
-[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  @[CPUTop.scala 98:25] : [module CPUTop]  Reference _T_1 is not fully initialized.[0m
-[0m[[0m[31merror[0m] [0m[0m   @[CPUTop.scala 105:17 CPUTop.scala 108:17 CPUTop.scala 112:17] : _T_1 <= mux(_T_4, VOID, _GEN_2) @[CPUTop.scala 105:17 CPUTop.scala 108:17 CPUTop.scala 112:17][0m
-[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.PassException: 3 errors detected![0m
-[0m[[0m[31merror[0m] [0m[0m(Test / [31mrunMain[0m) firrtl.passes.PassExceptions: [0m
-[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  @[CPUTop.scala 100:25] : [module CPUTop]  Reference _T_3 is not fully initialized.[0m
-[0m[[0m[31merror[0m] [0m[0m   @[CPUTop.scala 114:17] : _T_3 <= mux(_T_4, VOID, mux(_T_5, VOID, mux(_T_11, VOID, _T_16))) @[CPUTop.scala 114:17][0m
-[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  @[CPUTop.scala 99:25] : [module CPUTop]  Reference _T_2 is not fully initialized.[0m
-[0m[[0m[31merror[0m] [0m[0m   @[CPUTop.scala 109:17 CPUTop.scala 113:17] : _T_2 <= mux(_T_4, VOID, mux(_T_5, VOID, _GEN_1)) @[CPUTop.scala 109:17 CPUTop.scala 113:17][0m
-[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  @[CPUTop.scala 98:25] : [module CPUTop]  Reference _T_1 is not fully initialized.[0m
-[0m[[0m[31merror[0m] [0m[0m   @[CPUTop.scala 105:17 CPUTop.scala 108:17 CPUTop.scala 112:17] : _T_1 <= mux(_T_4, VOID, _GEN_2) @[CPUTop.scala 105:17 CPUTop.scala 108:17 CPUTop.scala 112:17][0m
-[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.PassException: 3 errors detected![0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckWidths$BitsWidthException:  @[CPUTop.scala 119:32]: [target ~CPUTop|CPUTop] High bit 32 in bits operator is larger than input width 32 in bits(ProgramMemory.io.instructionRead, 32, 29).[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mrunMain[0m) firrtl.passes.CheckWidths$BitsWidthException:  @[CPUTop.scala 119:32]: [target ~CPUTop|CPUTop] High bit 32 in bits operator is larger than input width 32 in bits(ProgramMemory.io.instructionRead, 32, 29).[0m

@@ -33,18 +33,15 @@ class CPUTop extends Module {
   private val alu = Module(new ALU())
   // ----------------------- OUR CODE BEGIN ----------------------- //
 
-  io.done := false.B
   private val (opCode, operand_1, operand_2, operand_3) = splitInstruction(programMemory.io.instructionRead)
   val END  = 9.U(4.W); //
-  when (opCode === END) {
-    io.done := true.B
-  }
+  io.done := (opCode === END)
 
   // --- into programCounter --- //
   programCounter.io.run := io.run
   programCounter.io.stop := io.done
   programCounter.io.jump := jump(alu, opCode)
-  programCounter.io.programCounterJump := operand_1 // target destination reg_or_mem
+  programCounter.io.programCounterJump := operand_1 // target destination prog_mem
 
   // --- into programMemory --- //
   programMemory.io.address := programCounter.io.programCounter
@@ -52,16 +49,18 @@ class CPUTop extends Module {
   controlUnit.io.opCode := opCode
 
   // --- into register --- //
-  private val from_memory_or_calc = Mux(
-    controlUnit.io.memToReg,
-    dataMemory.io.dataRead, //.asSInt,
-    alu.io.result
+  val LD = 0.U(4.W); // 0000: reg, value
+  private val from_memory_or_calc_or_immidiate = Mux(
+    controlUnit.io.memToReg, dataMemory.io.dataRead, // if memToReg: dataRead
+    Mux(opCode === LD, operand_2, // if LD: operand_2
+      alu.io.result) // else result
   )
+
   // val reg_load_or_immediate = Mux(
   //   controlUnit.io.regDst, _, _) // = load immediate, ?, ?
   registerFile.io.aSel := operand_2 // = aSel = regSrc_1
   registerFile.io.bSel := operand_3 // = bSel = regSrc_2 or immediate value
-  registerFile.io.writeData := from_memory_or_calc
+  registerFile.io.writeData := from_memory_or_calc_or_immidiate
   registerFile.io.writeSel := operand_1 // regDst
   registerFile.io.writeEnable := controlUnit.io.regWriteEnable
 
@@ -76,48 +75,21 @@ class CPUTop extends Module {
   alu.io.sel := controlUnit.io.aluOp
 
   // --- into Data Memory --- //
-  dataMemory.io.address := alu.io.result // why alu result rather than register?
+  dataMemory.io.address := operand_1 //registerFile.io.a // alu.io.result // why alu result rather than register?
   dataMemory.io.writeEnable := controlUnit.io.memWriteEnable
-  dataMemory.io.dataWrite := registerFile.io.b
+  dataMemory.io.dataWrite := registerFile.io.a // operand_2 // registerFile.io.b
 
 
 
   private def splitInstruction(instruction: UInt): (UInt, UInt, UInt, UInt) = {
     // instruction is UInt(32.W)
-    //  operation ---- inputs -------- //
-    val LI   = 0.U(4.W); // reg, value
-    val LD   = 1.U(4.W); // regDst, reg_or_mem
-    val SD   = 2.U(4.W); // reg_or_mem, regSrc
-    val ADDI = 3.U(4.W); // regDst, regSrc, value
-    val ADD  = 4.U(4.W); // regDst, regSrc_1, regSrc_2
-    val MULT = 5.U(4.W); // regDst, regSrc_1, regSrc_2
-    val JNEQ = 6.U(4.W); // prog_mem_dst, regSrc_1, regSrc_1
-    val JLT  = 7.U(4.W); // prog_mem_dst, regSrc_1, regSrc_1
-    val JR   = 8.U(4.W); // prog_mem_dst
-    val END  = 9.U(4.W); //
-    val SUB  = 10.U(4.W);// regDst, regSrc, regSrc
 
-
-    val opCode = instruction(3, 0);
-    val operand_1 = Wire(UInt(8.W));
-    val operand_2 = Wire(UInt(10.W));
-    val operand_3 = Wire(UInt(10.W));
-    operand_1 := 0.U;
-    operand_2 := 0.U;
-    operand_3 := 0.U;
-
-    when (opCode === END) {
-
-    } .elsewhen (opCode === JR) {
-      operand_1 := instruction(7, 4);
-    } .elsewhen(opCode === LI || opCode === LD || opCode === SD) {
-      operand_1 := instruction(11, 4);
-      operand_2 := instruction(21, 12);
-    } .otherwise {
-      operand_1 := instruction(11, 4);
-      operand_2 := instruction(21, 12);
-      operand_3 := instruction(31, 22);
-    }
+    // chisel has a funky way to slice bits
+    // bits[from, to] skrives som bits(len - 1 - from , len - to)
+    val opCode    = instruction(32 - 1 - 0 , 32 - 4 );
+    val operand_1 = instruction(32 - 1 - 4 , 32 - 12);
+    val operand_2 = instruction(32 - 1 - 12, 32 - 22);
+    val operand_3 = instruction(32 - 1 - 22, 32 - 32);
 
     return (opCode, operand_1, operand_2, operand_3)
 
@@ -132,7 +104,7 @@ class CPUTop extends Module {
     out := false.B;
     switch(opCode) {
       is(JR)  { out := true.B}
-      is(JLT) { out := alu.io.result < 0.U}
+      is(JLT) { out := alu.io.less_than} // result < 0.U virker ikke, da det er en UInt
       is(JNEQ){ out := !alu.io.zero}
     }
 

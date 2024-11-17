@@ -9,7 +9,7 @@ class ControlUnit extends Module {
     val regWriteEnable = Output(Bool()) // regWrite
 
     val aluOp = Output(UInt(2.W))
-    val aluSrc = Output(Bool())
+    val aluSrc = Output(Bool()) // reg or immediate into alu ?
 
     val memToReg = Output(Bool()) // take data from memory, not alu
     val memWriteEnable = Output(Bool())
@@ -57,6 +57,8 @@ class ControlUnit extends Module {
 
   io.regWriteEnable := false.B
   switch(io.opCode) {
+    is(LI)   {io.regWriteEnable := true.B}
+    is(LD)   {io.regWriteEnable := true.B}
     is(ADD)  {io.regWriteEnable := true.B}
     is(ADDI) {io.regWriteEnable := true.B}
     is(MULT) {io.regWriteEnable := true.B}

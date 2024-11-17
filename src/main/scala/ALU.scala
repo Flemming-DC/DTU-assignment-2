@@ -9,6 +9,7 @@ class ALU extends Module {
 
     val result = Output(UInt(32.W))
     val zero = Output(Bool())
+    val less_than = Output(Bool())
   })
 
   // sel
@@ -24,5 +25,6 @@ class ALU extends Module {
     is(SUB)  {io.result := io.x - io.y}
   }
   io.zero := (io.result === 0.U);
+  io.less_than := (io.x < io.y);
 
 }
